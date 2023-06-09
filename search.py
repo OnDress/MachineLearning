@@ -34,7 +34,9 @@ def feature_search(data):
     for i in range(1, len(data.columns)):
         print("On the " + str(i) + "th level of the search tree" )
         feature_to_add_at_level = []
-        best_so_far_accuracy = 0
+        if i == 1:
+            best_so_far_accuracy = 0
+        added_to_set = False
         for k in range(1, len(data.columns)):
             if k not in current_set_of_features:
                 print("--Considering adding the " + str(k) + "th feature")
@@ -43,5 +45,10 @@ def feature_search(data):
                 if accuracy > best_so_far_accuracy:
                     best_so_far_accuracy = accuracy
                     feature_to_add_at_level = k
+                    added_to_set = True
+        if added_to_set == False:
+            break
         current_set_of_features.add(feature_to_add_at_level)
         print("On level " + str(i) + " I added feature " + str(feature_to_add_at_level) + " to current set")
+    print('Best Set of Features: ', current_set_of_features)
+    print("With Accuracy: " + str(best_so_far_accuracy))
